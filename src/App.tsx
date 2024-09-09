@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Todolist, { TaskType } from './components/Todolist';
+
+
 
 function App() {
+  let initTasks: Array<TaskType> = [
+    {id: 1, title: "CSS", isDone: true},
+    {id: 2, title: "JS", isDone: false},
+    {id: 3, title: "REACT", isDone: false}
+  ]
+  
+  let arr = useState(initTasks)
+
+  let tasks = arr[0];
+  let setTasks = arr[1];
+//54:38 2 урок
+
+  useState(tasks)
+  
+  function deleteTask(id: number){
+    let filteredTasks = tasks.filter(t => t.id !== id)
+    setTasks(filteredTasks);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Todolist 
+      title="Что выучить" 
+      tasks={tasks}
+      deleteTask={deleteTask}/>
     </div>
   );
 }
