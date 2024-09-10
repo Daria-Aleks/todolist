@@ -10,6 +10,7 @@ type PropsType = {
     title: string,
     tasks: Array<TaskType>
     deleteTask: Function
+    changeFilter: Function
 }
 
 export default function Todolist(props: PropsType){
@@ -32,9 +33,9 @@ export default function Todolist(props: PropsType){
                     })
                 }
             </ul>
-            <button>Все</button>
-            <button>Надо сделать</button>
-            <button>Завершенные</button>
+            <button onClick={ ()=> {props.changeFilter("all")}}>Все</button>
+            <button onClick={ ()=> {props.changeFilter("active")}}>Надо сделать</button>
+            <button onClick={ ()=> {props.changeFilter("completed")}}>Завершенные</button>
         </div>
     )
 }

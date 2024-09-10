@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Todolist, { TaskType } from './components/Todolist';
 
+export type FilterValueType = "all" | "completed" | "active";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   ]
   
   const [tasks, setTasks] = useState(initTasks);
+  const [filter, setFilter] = useState<FilterValueType>("all")
 //54:38 2 урок
 
   useState(tasks)
@@ -22,12 +24,25 @@ function App() {
     setTasks(filteredTasks);
   }
 
+  function changeFilter(value: FilterValueType) {
+    setFilter(value);
+  }
+  
+  let tasksForTodolist = tasks;
+  if(filter === "completed"){
+    tasksForTodolist = tasks.filter(t => t.isDone === true);
+  }
+  if(filter === "active"){
+    tasksForTodolist = tasks.filter(t => t.isDone === false)
+  }
+
   return (
     <div className="App">
       <Todolist 
       title="Что выучить" 
-      tasks={tasks}
-      deleteTask={deleteTask}/>
+      tasks={tasksForTodolist}
+      deleteTask={deleteTask}
+      changeFilter={changeFilter}/>
     </div>
   );
 }
