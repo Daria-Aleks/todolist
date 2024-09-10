@@ -12,10 +12,7 @@ function App() {
     {id: 3, title: "REACT", isDone: false}
   ]
   
-  let arr = useState(initTasks)
-
-  let tasks = arr[0];
-  let setTasks = arr[1];
+  const [tasks, setTasks] = useState(initTasks);
 //54:38 2 урок
 
   useState(tasks)
