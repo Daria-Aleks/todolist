@@ -8,7 +8,6 @@ import { title } from 'process';
 export type FilterValueType = "all" | "completed" | "active";
 
 
-// 3 урок 31:40 
 
 function App() {
   let initTasks: Array<TaskType> = [
@@ -37,6 +36,14 @@ function App() {
     setTasks(newTasks);
   }
 
+  function changeStatus (taskId: string, isDone: boolean) {
+    let task = tasks.find (t => t.id === taskId);
+    if (task){
+      task.isDone = isDone;
+      }
+    setTasks([...tasks]);
+    }
+
   function changeFilter(value: FilterValueType) {
     setFilter(value);
   }
@@ -57,6 +64,8 @@ function App() {
       deleteTask={deleteTask}
       changeFilter={changeFilter}
       addTask={addTask}
+      changeTaskStatus={changeStatus}
+      filter={filter}
       />
     </div>
   );
