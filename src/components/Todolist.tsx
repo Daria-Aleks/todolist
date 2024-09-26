@@ -2,6 +2,7 @@ import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, useState, 
 import { FilterValueType } from "../App";
 import { keyboardKey } from "@testing-library/user-event";
 import AddItemForm from "./AddItemForm";
+import EditableSpan from "./EditableSpan";
 
 export type TaskType = {
     id: string,
@@ -19,6 +20,8 @@ type PropsType = {
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     filter: FilterValueType
     removeTodolist: (todolistId:string) => void
+    changeTaskTitle: (id: string, newTitle: string, todolistId: string)  => void
+
 }
 
 export default function Todolist(props: PropsType){
@@ -40,8 +43,11 @@ export default function Todolist(props: PropsType){
             <ul>
                 {
                     props.tasks.map( (t)=> {
-                        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                        const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                             props.changeTaskStatus(t.id, e.currentTarget.checked, props.id);
+                        }
+                        const onChangeTitleHandler = (newValue:string) => {
+                            props.changeTaskTitle(t.id, newValue, props.id);
                         }
                         const onDeleteHandler = () => {
                             {props.deleteTask(t.id, props.id)}
@@ -49,9 +55,9 @@ export default function Todolist(props: PropsType){
                         return  (
                             <li key={t.id} className={t.isDone ?"is-done" : ""}>
                                 <input type="checkbox" 
-                                onChange={onChangeHandler}
+                                onChange={onChangeStatusHandler}
                                 checked={t.isDone}/>
-                                <span>{t.title}</span>
+                                <span><EditableSpan title={t.title} onChange={onChangeTitleHandler}/></span>
                                 <button onClick={onDeleteHandler}>Удалить</button>                            
                             </li>
                         )
@@ -64,5 +70,4 @@ export default function Todolist(props: PropsType){
         </div>
     )
 }
-
 
