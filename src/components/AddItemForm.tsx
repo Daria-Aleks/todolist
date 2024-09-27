@@ -1,4 +1,7 @@
+import { Button, IconButton, TextField } from "@mui/material";
 import { useState, ChangeEvent, KeyboardEvent } from "react";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
@@ -21,18 +24,24 @@ export default function AddItemForm(props: AddItemFormPropsType) {
        setNewTaskTitle("")
         }   
         else{
-           setError("Введите текст задачи")
+           setError("Введите текст")
        }
        }    
 
     return (
         <div>
-                <input value={newTaskTitle.trim()} onChange={onNewTaskTitle}
+                <TextField 
+                value={newTaskTitle.trim()} 
+                onChange={onNewTaskTitle}
                 onKeyUp={onKeyUpHandler}
-                className={error ? "error" : ""}
+                error={!!error}
+                variant="outlined"
+                label={'Введите значение'}
+                helperText={error}
                 />
-                <button onClick={addTaskFunc}>Добавить</button>
-                {error && <div className="error-message">{error}</div>}
+                <IconButton onClick={addTaskFunc} color={'primary'}>
+                    <AddCircleOutlineIcon/>
+                </IconButton>
             </div>
     )
 }
